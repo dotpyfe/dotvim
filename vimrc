@@ -4,16 +4,10 @@
 " Pathogen: easy modular management of plugins
 " Tagbar: Taglist++, source code browsing (requires exuberant-ctags pkg
 "   >=v5.5) (currently mapped to <leader>1)
-" SuperTab: Insert-mode tab completion
-"	Surround: easy mappings for parens, brackets, quotes, etc (e.g. cs'" to
-"	  change single quotes to double quotes
 "	NERDTree: better file explorer, i.e. replaces :Ex and :Vex (mapped to
 "   <leader>2)
 "	NERDCommenter: easy mappings for inserting comments ('<leader>cc' etc in cmd mode to use)
 "	Fugitive: git integration (e.g. :Gstatus)
-"	Argtextobj: allows function arguments to be edited as vim text objects
-"	Indenttextobj: allows text at same indent level to be edited as vim text
-"	objects (particularly useful for, e.g., Python)
 "	Grepvim: grep integration (use :Grep, among other things)
 "	Bufexplorer: easy buffer navigation (just use <leader>be)
 "	FuzzyFinder: search files, buffers, tags etc. (e.g. <leader>ff)
