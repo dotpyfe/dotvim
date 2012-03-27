@@ -28,6 +28,6 @@
 [submodule "bundle/snipmate"]
 	path = bundle/snipmate
 	url = git://github.com/msanders/snipmate.vim.git
-[submodule "bundle/autocomplpop"]
-	path = bundle/autocomplpop
-	url = git://github.com/vim-scripts/AutoComplPop.git
+[submodule "bundle/neocomplcache"]
+	path = bundle/neocomplcache
+	url = git://github.com/Shougo/neocomplcache.git
