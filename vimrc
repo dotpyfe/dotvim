@@ -110,7 +110,7 @@ set shell=/bin/zsh
 " for the tags file
 set tags=tags;/
 " use cscope in addition to ctags
-" source ~/.vim/cscope_maps.vim
+source ~/.vim/cscope_maps.vim
 
 " aesthetics
 set background=dark
