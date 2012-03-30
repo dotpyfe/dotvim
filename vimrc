@@ -7,7 +7,6 @@
 "	NERDTree: better file explorer, i.e. replaces :Ex and :Vex (mapped to
 "   <leader>2)
 "	NERDCommenter: easy mappings for inserting comments ('<leader>cc' etc in cmd mode to use)
-"	Fugitive: git integration (e.g. :Gstatus)
 "	Grepvim: grep integration (use :Grep, among other things)
 "	Bufexplorer: easy buffer navigation (just use <leader>be)
 "	FuzzyFinder: search files, buffers, tags etc. (e.g. <leader>ff)
@@ -16,8 +15,7 @@
 "   database (build db with cscope -R -b, add -q to build inverted index for
 "   quicker lookups, add -k when doing kernel/lib hacking to tell cscope to
 "   ignore /usr/include)
-" SnipMate: great for auto-completion of common tags,func templates etc
-" AutoComplPop: pop-down menu for autocompletion
+" NeoComplCache: pop-down menu for autocompletion
 
 " set up pathogen for easy plugin installation and mgmt
 call pathogen#runtime_append_all_bundles()
@@ -258,10 +256,6 @@ set title
 " PLUGIN-SPECIFIC OPTIONS
 " =======================
 
-"=== SuperTab ===
-" tell SuperTab to use vim's built-in OmniComplete
-let g:SuperTabDefaultCompletionType = "context"
-
 "=== Tagbar ===
 "make TagBar a little easier: press ',1' in command mode to bring it up
 let g:tagbar_usearrows = 1
@@ -310,7 +304,7 @@ inoremap <expr><C-g>     neocomplcache#undo_completion()
 inoremap <expr><C-l>     neocomplcache#complete_common_string()
 
 " SuperTab like snippets behavior.
-"imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
@@ -318,6 +312,7 @@ inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
+let g:neocomplcache_enable_auto_select = 1
 inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplcache#close_popup()
