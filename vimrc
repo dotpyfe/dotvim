@@ -117,7 +117,7 @@ set background=dark
 if &t_Co == 256
     colorscheme molokai
 endif
-
+     
 " show status line at bottom 0=never, 1=when > 1 window open
 " 2=always
 set laststatus=2
