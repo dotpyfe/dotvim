@@ -55,7 +55,10 @@ set wildmenu
 
 " underline!
 set cursorline
-"set cursorcolumn
+"set cursorcolun
+
+" Search/replace word under cursor
+nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
 
 " tell me when i'm in insert or visual mode
 set showmode
