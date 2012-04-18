@@ -31,6 +31,7 @@ call pathogen#helptags()
 syntax enable
 
 set bg=dark
+let g:Powerline_symbols = 'fancy'
 
 " Terminal 256 colors
 set t_Co=256
@@ -124,7 +125,7 @@ endif
 " show status line at bottom 0=never, 1=when > 1 window open
 " 2=always
 set laststatus=2
-set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
+"set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
 "              | | | | |  |   |      |  |     |    |
 "              | | | | |  |   |      |  |     |    + current 
 "              | | | | |  |   |      |  |     |       column
@@ -270,9 +271,9 @@ nnoremap <leader>1 :TagbarToggle<CR>
 nnoremap <leader>2 :NERDTreeToggle<CR>
 
 "=== FuzzyFinder ===
-nnoremap <leader>ff :FufFile<CR>   " search files
-nnoremap <leader>fb :FufBuffer<CR> " search buffers
-nnoremap <leader>fd :FufDir<CR>    " search directories
+nnoremap <leader>f :FufFile<CR>   " search files
+nnoremap <leader>b :FufBuffer<CR> " search buffers
+nnoremap <leader>d :FufDir<CR>    " search directories
 
 "=== NeoComplCache ===
 " Use neocomplcache.
