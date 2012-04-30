@@ -31,7 +31,7 @@ call pathogen#helptags()
 syntax enable
 
 set bg=dark
-let g:Powerline_symbols = 'fancy'
+let g:Powerline_symbols = 'unicode'
 
 " Terminal 256 colors
 set t_Co=256
