@@ -30,7 +30,7 @@ call pathogen#helptags()
 """"""""""""""""""""""
 syntax enable
 
-set bg=dark
+"set bg=dark
 let g:Powerline_symbols = 'fancy'
 
 " Terminal 256 colors
@@ -255,6 +255,12 @@ nnoremap <leader>w :w<CR>
 cnoremap w!! w !sudo tee % > /dev/null
 
 set title
+
+" Insert a lambda: mostly for scheme and haskell
+imap <C-Bslash> λ
+
+" Use better syntax highlighting for ASM
+let g:asmsyntax="asmx86"
 
 " =======================
 " PLUGIN-SPECIFIC OPTIONS
