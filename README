@@ -2,7 +2,7 @@ Installation:
 
 Clone the repo:
 
-    git clone git://github.com/khale/dotvim.git ~/.vim
+    git clone git://github.com/dotpyfe/dotvim.git ~/.vim
 
 Create symlink from $HOME to the vimrc in the repo
 

@@ -13,12 +13,6 @@
 [submodule "bundle/bufexplorer"]
 	path = bundle/bufexplorer
 	url = git://github.com/markabe/bufexplorer.git
-[submodule "bundle/fuzzyfinder"]
-	path = bundle/fuzzyfinder
-	url = git://github.com/vim-scripts/FuzzyFinder.git
-[submodule "bundle/l9"]
-	path = bundle/l9
-	url = git://github.com/vim-scripts/L9.git
 [submodule "bundle/autoload-cscope"]
 	path = bundle/autoload-cscope
 	url = git://github.com/vim-scripts/autoload_cscope.vim.git
@@ -34,3 +28,6 @@
 [submodule "bundle/vim-racket"]
 	path = bundle/vim-racket
 	url = git://github.com/wlangstroth/vim-racket.git
+[submodule "bundle/ctrlp"]
+	path = bundle/ctrlp
+	url = git://github.com/kien/ctrlp.vim.git
