@@ -262,6 +262,10 @@ imap <C-Bslash> λ
 " Use better syntax highlighting for ASM
 let g:asmsyntax="asmx86"
 
+" Haskell Mode
+let g:haddock_browser = "/usr/bin/google-chrome"
+au Bufenter *.hs compiler ghc
+
 " =======================
 " PLUGIN-SPECIFIC OPTIONS
 " =======================
