@@ -18,8 +18,10 @@
 " NeoComplCache: pop-down menu for autocompletion
 
 " set up pathogen for easy plugin installation and mgmt
+filetype off
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
+filetype plugin indent on
 
 " ================
 " GENERAL SETTINGS
@@ -162,7 +164,7 @@ set wrap
 set textwidth=80
 set formatoptions=qrtn1
 " tell me when i'm running on too long
-"set colorcolumn=85
+set colorcolumn=85
 
 "set up code folding
 set nofoldenable     "don't fold by default
@@ -170,7 +172,6 @@ set foldmethod=indent   " fold on indentations
 set foldnestmax=10   "only fold up to 10 levels
 set foldlevel=1     " only show me first fold level
 
-filetype plugin indent on
 
 " save buffers when we move away from vim
 "au FocusLost * :wa
@@ -219,8 +220,8 @@ let mapleader=","
 "vnoremap / /\v
 
 " use Tab instead of '%' to match bracket pairs
-" nnoremap <tab> %
-" vnoremap <tab> %
+nnoremap <tab> %
+vnoremap <tab> %
 
 " quick window split with ,s[vh] (vertical, horizontal)
 nnoremap <leader>sv <C-w>v<C-w>l
