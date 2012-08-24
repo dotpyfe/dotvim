@@ -7,15 +7,6 @@
 [submodule "bundle/nerdtree"]
 	path = bundle/nerdtree
 	url = git://github.com/scrooloose/nerdtree.git
-[submodule "bundle/grep-vim"]
-	path = bundle/grep-vim
-	url = git://github.com/vim-scripts/grep.vim.git
-[submodule "bundle/bufexplorer"]
-	path = bundle/bufexplorer
-	url = git://github.com/markabe/bufexplorer.git
-[submodule "bundle/autoload-cscope"]
-	path = bundle/autoload-cscope
-	url = git://github.com/vim-scripts/autoload_cscope.vim.git
 [submodule "bundle/neocomplcache"]
 	path = bundle/neocomplcache
 	url = git://github.com/Shougo/neocomplcache.git
@@ -34,6 +25,3 @@
 [submodule "bundle/vim-golang"]
 	path = bundle/vim-golang
 	url = https://github.com/jnwhiteh/vim-golang.git
-[submodule "bundle/syntastic"]
-	path = bundle/syntastic
-	url = git://github.com/scrooloose/syntastic.git
