@@ -10,9 +10,9 @@
 [submodule "bundle/neocomplcache"]
 	path = bundle/neocomplcache
 	url = git://github.com/Shougo/neocomplcache.git
-[submodule "bundle/neocomplcache-snippets-complete"]
-	path = bundle/neocomplcache-snippets-complete
-	url = git://github.com/Shougo/neocomplcache-snippets-complete.git
+[submodule "bundle/neosnippet"]
+	path = bundle/neosnippet
+	url = git://github.com/Shougo/neosnippet.git
 [submodule "bundle/vim-powerline"]
 	path = bundle/vim-powerline
 	url = git://github.com/Lokaltog/vim-powerline.git
