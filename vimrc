@@ -1,7 +1,6 @@
 " Maciek's vimrc
 " current list of extensions I'm using:
 "
-" Pathogen: easy modular management of plugins
 " Tagbar: Taglist++, source code browsing (requires exuberant-ctags pkg
 "   >=v5.5) (currently mapped to <leader>1)
 "	NERDTree: better file explorer, i.e. replaces :Ex and :Vex (mapped to
@@ -17,12 +16,25 @@
 "   ignore /usr/include)
 " NeoComplCache: pop-down menu for autocompletion
 
-" set up pathogen for easy plugin installation and mgmt
 filetype off
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
-filetype plugin indent on
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+" its the vundle
+Bundle 'gmarik/vundle'
 
+" github repos
+Bundle 'scrooloose/nerdcommenter.git'
+Bundle 'majutsushi/tagbar.git'
+Bundle 'scrooloose/nerdtree.git'
+Bundle 'Shougo/neocomplcache.git'
+Bundle 'Shougo/neosnippet.git'
+Bundle 'Lokaltog/vim-powerline.git'
+Bundle 'wlangstroth/vim-racket.git'
+Bundle 'kien/ctrlp.vim.git'
+Bundle 'jnwhiteh/vim-golang.git'
+Bundle 'kien/rainbow_parentheses.vim.git'
+
+filetype plugin indent on
 " ================
 " GENERAL SETTINGS
 " ================
@@ -160,11 +172,14 @@ set showmatch
 nnoremap <CR> :noh<CR>
 
 " line wrapping
-set wrap
-set textwidth=80
+"set wrap
+"set textwidth=80
 set formatoptions=qrtn1
 " tell me when i'm running on too long
-set colorcolumn=85
+set colorcolumn=80
+highlight OverLength ctermbg=red 
+"ctermfg=white
+match OverLength /\%80v.\+/
 
 "set up code folding
 set nofoldenable     "don't fold by default
@@ -182,18 +197,18 @@ set backspace=indent,eol,start
 " When opening a new line and no filetype-specific indenting is enabled, keep
 " the same indent as the line you're currently on. Useful for READMEs, etc.
 set autoindent
-set smartindent
+"set smartindent
 
 " let me use mouse in all modes
 "set mouse=a
 
 
 " Tell vim to remember certain things when we exit
-" "  '10  :  marks will be remembered for up to 10 previously edited files
-" "  "100 :  will save up to 100 lines for each register
-" "  :20  :  up to 20 lines of command-line history will be remembered
-" "  %    :  saves and restores the buffer list
-" "  n... :  where to save the viminfo files
+"  '10  :  marks will be remembered for up to 10 previously edited files
+"  "100 :  will save up to 100 lines for each register
+"  :20  :  up to 20 lines of command-line history will be remembered
+"  %    :  saves and restores the buffer list
+"  n... :  where to save the viminfo files
 set viminfo='10,\"100,:20,%,n~/.viminfo
 
 " do the restore
@@ -358,3 +373,12 @@ let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
 let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
+
+"=== rainbow parens ===
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
+"=== CTRLP ===
+let g:ctrlp_cmd = "CtrlPBuffer"
