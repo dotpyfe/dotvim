@@ -17,6 +17,18 @@
 " NeoComplCache: pop-down menu for autocompletion
 
 filetype off
+
+" set us up some vundle magic
+let iCanHazVundle=1
+let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+if !filereadable(vundle_readme)
+    echo "Installing Vundle.."
+    echo ""
+    silent !mkdir -p ~/.vim/bundle
+    silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+    let iCanHazVundle=0
+endif
+
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 " its the vundle
@@ -33,6 +45,12 @@ Bundle 'wlangstroth/vim-racket.git'
 Bundle 'kien/ctrlp.vim.git'
 Bundle 'jnwhiteh/vim-golang.git'
 Bundle 'kien/rainbow_parentheses.vim.git'
+
+if iCanHazVundle == 0
+    echo "Installing Bundles, please ignore key map error messages"
+    echo ""
+    :BundleInstall
+endif
 
 filetype plugin indent on
 " ================
