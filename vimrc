@@ -62,7 +62,22 @@ filetype plugin indent on
 """"""""""""""""""""""
 syntax enable
 
+" old vim?
+if version >= 720
+    set colorcolumn=80
+    " save my undo history for this buff along with the file
+    " could save some headaches
+    " the // causes fully qualified path to be in the swp name
+    set undofile
+    set undodir=~/.vim/tmp/undo//,~/.tmp//,/tmp//
+    " max number of undos; default is 1000 on UNIX
+    "set undolevels=500
+    " max number of lines to save in the .un file, default is 10000
+    "set undorelad=500
+endif
+
 "set bg=dark
+" symbols = compatible eliminates glyph usage
 let g:Powerline_symbols = 'fancy'
 
 " Terminal 256 colors
@@ -103,16 +118,6 @@ set showcmd
 set noerrorbells
 set novisualbell 
 
-" save my undo history for this buff along with the file
-" could save some headaches
-" the // causes fully qualified path to be in the swp name
-set undofile
-set undodir=~/.vim/tmp/undo//,~/.tmp//,/tmp//
-" max number of undos; default is 1000 on UNIX
-"set undolevels=500
-" max number of lines to save in the .un file, default is 10000
-"set undorelad=500
-
 " where to put swp files
 set directory=~/.vim/tmp/swp//,~/.tmp//,/tmp//
 
@@ -121,7 +126,7 @@ set nobackup
 
 " to try to get rid of 'hit ENTER to continue' prompts
 set shortmess=a
-set cmdheight=2
+set cmdheight=1
 
 " always give me at least 3 lines before and after cursor
 set scrolloff=3
@@ -194,10 +199,9 @@ nnoremap <CR> :noh<CR>
 "set textwidth=80
 set formatoptions=qrtn1
 " tell me when i'm running on too long
-set colorcolumn=80
-highlight OverLength ctermbg=red 
+"highlight OverLength ctermbg=red 
 "ctermfg=white
-match OverLength /\%80v.\+/
+"match OverLength /\%80v.\+/
 
 "set up code folding
 set nofoldenable     "don't fold by default
@@ -259,6 +263,8 @@ vnoremap <tab> %
 " quick window split with ,s[vh] (vertical, horizontal)
 nnoremap <leader>sv <C-w>v<C-w>l
 nnoremap <leader>sh <C-w>s<C-w>j
+set splitright
+set splitbelow
 
 " move around splits faster
 nnoremap <C-h> <C-w>h
@@ -346,13 +352,22 @@ endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
 " Plugin key-mappings.
-imap <C-k>     <Plug>(neocomplcache_snippets_expand)
-smap <C-k>     <Plug>(neocomplcache_snippets_expand)
-inoremap <expr><C-g>     neocomplcache#undo_completion()
-inoremap <expr><C-l>     neocomplcache#complete_common_string()
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 " SuperTab like snippets behavior.
-imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: "\<TAB>"
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
 
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
