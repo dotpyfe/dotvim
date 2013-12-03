@@ -40,11 +40,15 @@ Bundle 'majutsushi/tagbar.git'
 Bundle 'scrooloose/nerdtree.git'
 Bundle 'Shougo/neocomplcache.git'
 Bundle 'Shougo/neosnippet.git'
-Bundle 'Lokaltog/vim-powerline.git'
+"Bundle 'Lokaltog/vim-powerline.git'
+Bundle 'bling/vim-airline'
 Bundle 'wlangstroth/vim-racket.git'
 Bundle 'kien/ctrlp.vim.git'
 Bundle 'jnwhiteh/vim-golang.git'
 Bundle 'kien/rainbow_parentheses.vim.git'
+Bundle 'altercation/vim-colors-solarized.git'
+Bundle 'wting/rust.vim'
+"Bundle 'Valloric/YouCompleteMe.git'
 
 if iCanHazVundle == 0
     echo "Installing Bundles, please ignore key map error messages"
@@ -63,7 +67,11 @@ filetype plugin indent on
 syntax enable
 
 "set bg=dark
-let g:Powerline_symbols = 'fancy'
+"let g:Powerline_symbols = 'fancy'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline_theme="dark"
 
 " Terminal 256 colors
 set t_Co=256
@@ -152,6 +160,8 @@ set background=dark
 " not all terms are 256 :(
 if &t_Co == 256
     colorscheme molokai
+    "let g:solarized_termcolors=256
+    "colorscheme solarized
 endif
      
 " show status line at bottom 0=never, 1=when > 1 window open
@@ -195,9 +205,9 @@ nnoremap <CR> :noh<CR>
 set formatoptions=qrtn1
 " tell me when i'm running on too long
 set colorcolumn=80
-highlight OverLength ctermbg=red 
+"highlight OverLength ctermbg=red 
 "ctermfg=white
-match OverLength /\%80v.\+/
+"match OverLength /\%80v.\+/
 
 "set up code folding
 set nofoldenable     "don't fold by default
@@ -346,13 +356,22 @@ endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
 " Plugin key-mappings.
-imap <C-k>     <Plug>(neocomplcache_snippets_expand)
-smap <C-k>     <Plug>(neocomplcache_snippets_expand)
-inoremap <expr><C-g>     neocomplcache#undo_completion()
-inoremap <expr><C-l>     neocomplcache#complete_common_string()
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 " SuperTab like snippets behavior.
-imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: "\<TAB>"
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
 
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
