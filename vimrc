@@ -66,6 +66,20 @@ filetype plugin indent on
 """"""""""""""""""""""
 syntax enable
 
+" old vim?
+if version >= 720
+    set colorcolumn=80
+    " save my undo history for this buff along with the file
+    " could save some headaches
+    " the // causes fully qualified path to be in the swp name
+    set undofile
+    set undodir=~/.vim/tmp/undo//,~/.tmp//,/tmp//
+    " max number of undos; default is 1000 on UNIX
+    "set undolevels=500
+    " max number of lines to save in the .un file, default is 10000
+    "set undorelad=500
+endif
+
 "set bg=dark
 "let g:Powerline_symbols = 'fancy'
 let g:airline_powerline_fonts = 1
@@ -111,16 +125,6 @@ set showcmd
 set noerrorbells
 set novisualbell 
 
-" save my undo history for this buff along with the file
-" could save some headaches
-" the // causes fully qualified path to be in the swp name
-set undofile
-set undodir=~/.vim/tmp/undo//,~/.tmp//,/tmp//
-" max number of undos; default is 1000 on UNIX
-"set undolevels=500
-" max number of lines to save in the .un file, default is 10000
-"set undorelad=500
-
 " where to put swp files
 set directory=~/.vim/tmp/swp//,~/.tmp//,/tmp//
 
@@ -129,7 +133,7 @@ set nobackup
 
 " to try to get rid of 'hit ENTER to continue' prompts
 set shortmess=a
-set cmdheight=2
+set cmdheight=1
 
 " always give me at least 3 lines before and after cursor
 set scrolloff=3
@@ -269,6 +273,8 @@ vnoremap <tab> %
 " quick window split with ,s[vh] (vertical, horizontal)
 nnoremap <leader>sv <C-w>v<C-w>l
 nnoremap <leader>sh <C-w>s<C-w>j
+set splitright
+set splitbelow
 
 " move around splits faster
 nnoremap <C-h> <C-w>h
