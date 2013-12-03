@@ -82,7 +82,13 @@ endif
 
 "set bg=dark
 "let g:Powerline_symbols = 'fancy'
-let g:airline_powerline_fonts = 1
+"
+" NOTE: SWAP 'symbols' AND 'fonts' lines to enable fancy symbols
+"       this requires patched fonts, see https://github.com/bling/vim-airline
+"       for for powerline fonts documentation
+"
+"let g:airline_powerline_fonts = 1
+let g:Powerline_symbols = 'compatible'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline_theme="dark"
