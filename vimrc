@@ -1,62 +1,76 @@
-" Maciek's vimrc
-" current list of extensions I'm using:
-"
-" Tagbar: Taglist++, source code browsing (requires exuberant-ctags pkg
-"   >=v5.5) (currently mapped to <leader>1)
-"	NERDTree: better file explorer, i.e. replaces :Ex and :Vex (mapped to
-"   <leader>2)
-"	NERDCommenter: easy mappings for inserting comments ('<leader>cc' etc in cmd mode to use)
-"	Grepvim: grep integration (use :Grep, among other things)
-"	Bufexplorer: easy buffer navigation (just use <leader>be)
-"	FuzzyFinder: search files, buffers, tags etc. (e.g. <leader>ff)
-"   -> L9lib: required for FuF
-" AutoloadCscope: forces Cscope to recurse up parent dirs to find the
-"   database (build db with cscope -R -b, add -q to build inverted index for
-"   quicker lookups, add -k when doing kernel/lib hacking to tell cscope to
-"   ignore /usr/include)
-" NeoComplCache: pop-down menu for autocompletion
+" install vundle if it doesn't exist
+let neobundle_initialized=1
+let neobundle_readme=expand('~/.vim/bundle/neobundle.vim/README.md')
+if !filereadable(neobundle_readme)
+    echo "Installing NeoBundle..."
+    echo ""
+    silent !mkdir -p ~/.vim/plugin
+    silent !git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
+    let neobundle_initialized=0
+endif
 
+if version >= 720
+    set colorcolumn=80
+    set undofile
+    set undodir=~/.vim/tmp/undo//,~/.tmp//,/tmp//
+    " save my undo history for this buff along with the file
+    " could save some headaches
+    " the // causes fully qualified path to be in the swp name
+    " max number of undos; default is 1000 on UNIX
+    "set undolevels=500
+    " max number of lines to save in the .un file, default is 10000
+    "set undorelad=500
+endif
+
+set nocompatible
 filetype off
+set rtp+=~/.vim/bundle/neobundle.vim
 
-" set us up some vundle magic
-let iCanHazVundle=1
-let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
-if !filereadable(vundle_readme)
-    echo "Installing Vundle.."
-    echo ""
-    silent !mkdir -p ~/.vim/bundle
-    silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
-    let iCanHazVundle=0
-endif
+" Required:
+ call neobundle#begin(expand('~/.vim/bundle/'))
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-" its the vundle
-Bundle 'gmarik/vundle'
+ " Let NeoBundle manage NeoBundle
+ " Required:
+ NeoBundleFetch 'Shougo/neobundle.vim'
 
-" github repos
-Bundle 'scrooloose/nerdcommenter.git'
-Bundle 'majutsushi/tagbar.git'
-Bundle 'scrooloose/nerdtree.git'
-Bundle 'Shougo/neocomplcache.git'
-Bundle 'Shougo/neosnippet.git'
-"Bundle 'Lokaltog/vim-powerline.git'
-Bundle 'bling/vim-airline'
-Bundle 'wlangstroth/vim-racket.git'
-Bundle 'kien/ctrlp.vim.git'
-Bundle 'jnwhiteh/vim-golang.git'
-Bundle 'kien/rainbow_parentheses.vim.git'
-Bundle 'altercation/vim-colors-solarized.git'
-Bundle 'wting/rust.vim'
-"Bundle 'Valloric/YouCompleteMe.git'
+ " My Bundles here:
+ " Refer to |:NeoBundle-examples|.
+ " Note: You don't set neobundle setting in .gvimrc!
+ 
+NeoBundle 'Shougo/vimproc.vim', {
+          \ 'build' : {
+          \     'windows' : 'make -f make_mingw32.mak',
+          \     'cygwin' : 'make -f make_cygwin.mak',
+          \     'mac' : 'make -f make_mac.mak',
+          \     'unix' : 'make -f make_unix.mak',
+          \    },
+          \ }
 
-if iCanHazVundle == 0
-    echo "Installing Bundles, please ignore key map error messages"
-    echo ""
-    :BundleInstall
-endif
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'bling/vim-airline'
+NeoBundle 'scrooloose/nerdcommenter.git'
+NeoBundle 'majutsushi/tagbar.git'
+NeoBundle 'scrooloose/nerdtree.git'
+NeoBundle 'Shougo/neocomplete.git'
+NeoBundle 'Shougo/vimshell.git'
+NeoBundle 'kien/ctrlp.vim.git'
+NeoBundle 'kien/rainbow_parentheses.vim.git'
+NeoBundle 'tpope/vim-dispatch.git'
+NeoBundle 'tpope/vim-fugitive.git'
+NeoBundle 'gregsexton/gitv.git'
+NeoBundle 'altercation/vim-colors-solarized.git'
+NeoBundle 'tomasr/molokai.git'
 
-filetype plugin indent on
+ call neobundle#end()
+
+ " Required:
+ filetype plugin indent on
+
+ " If there are uninstalled bundles found on startup,
+ " this will conveniently prompt you to install them.
+ NeoBundleCheck
+
 " ================
 " GENERAL SETTINGS
 " ================
@@ -107,8 +121,6 @@ set ffs=unix,dos,mac
 " show line numbers
 set number
 
-" vive le vim!
-set nocompatible
 
 " better filename completion in vim command line
 set wildmode=list:longest,full
@@ -150,13 +162,21 @@ set shiftwidth=4
 set tabstop=4
 set softtabstop=4
 set smarttab
+set ttyfast  " we have a fast terminal
+
+" remap ; to : in command mode and replace it with , (saves a key press)
+"nore ; :
+"nore , ;
+
 
 " avoid that damn "no write since last change" warning when
 " switching buffers
 set hidden
 
 set encoding=utf-8
-set shell=/bin/zsh
+set shell=/bin/bash
+set lazyredraw  " don't redraw when we don't have to
+
 
 " tell Ctags to recurse up directories 
 " for the tags file
@@ -166,7 +186,6 @@ source ~/.vim/cscope_maps.vim
 
 " aesthetics
 set background=dark
-
 " not all terms are 256 :(
 if &t_Co == 256
     colorscheme molokai
@@ -177,21 +196,6 @@ endif
 " show status line at bottom 0=never, 1=when > 1 window open
 " 2=always
 set laststatus=2
-"set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
-"              | | | | |  |   |      |  |     |    |
-"              | | | | |  |   |      |  |     |    + current 
-"              | | | | |  |   |      |  |     |       column
-"              | | | | |  |   |      |  |     +-- current line
-"              | | | | |  |   |      |  +-- current % into file
-"              | | | | |  |   |      +-- current syntax in 
-"              | | | | |  |   |          square brackets
-"              | | | | |  |   +-- current fileformat
-"              | | | | |  +-- number of lines
-"              | | | | +-- preview flag in square brackets
-"              | | | +-- help flag in square brackets
-"              | | +-- readonly flag in square brackets
-"              | +-- rodified flag in square brackets
-"              +-- full path to file in the buffer
 
 
 " with these, if you include capitals in a search it'll do
@@ -208,13 +212,13 @@ set incsearch
 set showmatch
 " but allow me to get rid of the highlighting afterwards with ,space
 nnoremap <CR> :noh<CR>
+set hls!
 
 " line wrapping
 "set wrap
 "set textwidth=80
 set formatoptions=qrtn1
 " tell me when i'm running on too long
-set colorcolumn=80
 "highlight OverLength ctermbg=red 
 "ctermfg=white
 "match OverLength /\%80v.\+/
@@ -226,6 +230,13 @@ set foldnestmax=10   "only fold up to 10 levels
 set foldlevel=1     " only show me first fold level
 
 
+nnoremap j gj
+nnoremap k gk
+nnoremap <right> :bn<CR>
+nnoremap <left>  :bp<CR>
+inoremap <right> <ESC>:bn<CR>
+inoremap <left>  <ESC>:bp<CR>
+
 " save buffers when we move away from vim
 "au FocusLost * :wa
 
@@ -236,9 +247,6 @@ set backspace=indent,eol,start
 " the same indent as the line you're currently on. Useful for READMEs, etc.
 set autoindent
 "set smartindent
-
-" let me use mouse in all modes
-"set mouse=a
 
 
 " Tell vim to remember certain things when we exit
@@ -268,19 +276,10 @@ augroup END
 " change <leader> key. defaults is '\', hard to reach
 let mapleader=","
 
-" use perl-like regexes in search
-"nnoremap / /\v
-"vnoremap / /\v
-
-" use Tab instead of '%' to match bracket pairs
-nnoremap <tab> %
-vnoremap <tab> %
 
 " quick window split with ,s[vh] (vertical, horizontal)
 nnoremap <leader>sv <C-w>v<C-w>l
 nnoremap <leader>sh <C-w>s<C-w>j
-set splitright
-set splitbelow
 
 " move around splits faster
 nnoremap <C-h> <C-w>h
@@ -288,6 +287,15 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+" move around tabs faster
+nnoremap <leader>tn :tabnext<CR>
+nnoremap <leader>tp :tabprev<CR>
+nnoremap <leader>to :tabnew<CR>
+nnoremap <leader>tc :tabclose<CR>
+nnoremap <leader>t1 :tabn 1<CR>
+nnoremap <leader>t2 :tabn 2<CR>
+nnoremap <leader>t3 :tabn 3<CR>
+nnoremap <leader>t4 :tabn 4<CR>
 
 " key mapping to toggle spell checker (apparently this will do the right thing in
 " source files. Use zg to whitelist a word
@@ -313,98 +321,83 @@ cnoremap w!! w !sudo tee % > /dev/null
 set title
 
 " Insert a lambda: mostly for scheme and haskell
-imap <C-Bslash> λ
+"imap <C-Bslash> λ
 
 " Use better syntax highlighting for ASM
-let g:asmsyntax="asmx86"
+"let g:asmsyntax="asmx86"
 
 " Haskell Mode
-let g:haddock_browser = "/usr/bin/google-chrome"
-au Bufenter *.hs compiler ghc
+"let g:haddock_browser = "/usr/bin/google-chrome"
+"au Bufenter *.hs compiler ghc
 
 " =======================
 " PLUGIN-SPECIFIC OPTIONS
 " =======================
 
-"=== Tagbar ===
+" ++++++++++ TagBar ++++++++++++
 "make TagBar a little easier: press ',1' in command mode to bring it up
 let g:tagbar_usearrows = 1
 nnoremap <leader>1 :TagbarToggle<CR>
 " Uncomment this line to open Tagbar on startup for code files
 " au BufRead *.[ch],*.cpp,*.java,*.js,*.py,*.pl TagbarOpen
+" !++++++++++ TagBar ++++++++++++!
 
-"=== NERDTree ===
+" ++++++++ NERDTree ++++++++++
 nnoremap <leader>2 :NERDTreeToggle<CR>
+" !++++++++ NERDTree ++++++++++!
 
-"=== FuzzyFinder ===
-nnoremap <leader>f :FufFile<CR>   " search files
-nnoremap <leader>b :FufBuffer<CR> " search buffers
-nnoremap <leader>d :FufDir<CR>    " search directories
+" +++++++ Rainbow Parens ++++++++++
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+" !+++++++ Rainbow Parens ++++++++++!
 
-"=== NeoComplCache ===
-" Use neocomplcache.
-let g:neocomplcache_enable_at_startup = 1
+
+" +++++++++ NEOCOMPLETE +++++++++
+
+"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
-let g:neocomplcache_enable_smart_case = 1
-" Use camel case completion.
-let g:neocomplcache_enable_camel_case_completion = 1
-" Use underbar completion.
-let g:neocomplcache_enable_underbar_completion = 1
+let g:neocomplete#enable_smart_case = 1
 " Set minimum syntax keyword length.
-let g:neocomplcache_min_syntax_length = 3
-let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
 " Define dictionary.
-let g:neocomplcache_dictionary_filetype_lists = {
+let g:neocomplete#sources#dictionary#dictionaries = {
     \ 'default' : '',
     \ 'vimshell' : $HOME.'/.vimshell_hist',
     \ 'scheme' : $HOME.'/.gosh_completions'
-    \ }
+        \ }
 
 " Define keyword.
-if !exists('g:neocomplcache_keyword_patterns')
-  let g:neocomplcache_keyword_patterns = {}
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
 endif
-let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
 " Plugin key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: "\<TAB>"
-
-" For snippet_complete marker.
-if has('conceal')
-  set conceallevel=2 concealcursor=i
-endif
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
 
 " Recommended key-mappings.
 " <CR>: close popup and save indent.
-inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return neocomplete#close_popup() . "\<CR>"
+
+endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplcache#close_popup()
-inoremap <expr><C-e>  neocomplcache#cancel_popup()
-
-" AutoComplPop like behavior.
-"let g:neocomplcache_enable_auto_select = 1
-
-" Shell like behavior(not recommended).
-"set completeopt+=longest
-"let g:neocomplcache_enable_auto_select = 1
-"let g:neocomplcache_disable_auto_complete = 1
-"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<TAB>"
-"inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplete#close_popup()
+inoremap <expr><C-e>  neocomplete#cancel_popup()
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -414,20 +407,75 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Enable heavy omni completion.
-if !exists('g:neocomplcache_omni_patterns')
-  let g:neocomplcache_omni_patterns = {}
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
 endif
-let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-"autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
-let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
+"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
-"=== rainbow parens ===
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
+" !+++++++++ NEOCOMPLETE +++++++++!
 
-"=== CTRLP ===
+
+" +++++++++ CtrlP ++++++++++++++++++
+
 let g:ctrlp_cmd = "CtrlPBuffer"
+
+" Setup some default ignores
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
+  \ 'file': '\v\.(iso|bin|o|ko|d|exe|so|dll|class|png|jpg|jpeg)$',
+\}
+
+" Use the nearest .git directory as the cwd
+" This makes a lot of sense if you are working on a project that is in version
+" control. It also supports works with .svn, .hg, .bzr.
+let g:ctrlp_working_path_mode = 'r'
+
+" no file limit
+let g:ctrlp_max_files = 0
+
+" Easy bindings for its various modes
+nnoremap <leader>pb :CtrlPBuffer<cr>
+nnoremap <leader>pm :CtrlPMixed<cr>
+nnoremap <leader>pu :CtrlPMRU<cr>
+
+" !+++++++++ CtrlP ++++++++++++++++++!
+
+
+
+
+" Use dispatch to run tig if we have it
+
+if exists(":Start") 
+    command! Tig :Start tig<CR>
+    command! Tigit :Start tig %<CR>
+else 
+    command! Tig execute "!tig"<CR>
+    command! Tigit execute "!tig %"<CR>
+endif
+
+
+" +++++++++ VimShell ++++++++++++++++++
+
+nnoremap <leader>sh :new \| VimShell zsh<CR>
+nnoremap <leader>sv :vnew \| VimShell zsh<CR>
+nnoremap <leader>st :VimShellTab zsh<CR>
+
+" !+++++++++ VimShell ++++++++++++++++++!
+
+" ++++++++++ Dispatch ++++++++++++++++
+
+nnoremap <leader>mk :make isoimage -j8<CR>
+nnoremap <leader>scp :!make isoimage && scp nautilus.iso root@v-test-r415-8.cs.northwestern.edu:/root/kyle/<CR>
+
+function! Can_use_dispatch()
+    if exists(":Make")
+        nnoremap <leader>mk :Make isoimage -j8<CR>
+        nnoremap <leader>scp :Dispatch make isoimage && scp nautilus.iso root@v-test-r415-8.cs.northwestern.edu:/root/kyle/<CR>
+    endif
+endfunction
+
+autocmd VimEnter * call Can_use_dispatch()
+
+" !++++++++++ Dispatch ++++++++++++++++!
+
